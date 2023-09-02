@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\FamilyDetailResource\Pages;
 use App\Filament\Resources\FamilyDetailResource\RelationManagers;
 use App\Models\FamilyDetail;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,11 +14,24 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class FamilyDetailResource extends Resource
+class FamilyDetailResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = FamilyDetail::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+            'publish'
+        ];
+    }
 
     public static function form(Form $form): Form
     {
@@ -52,7 +66,7 @@ class FamilyDetailResource extends Resource
                         'vishisthadwaita' => 'ವಿಶಿಷ್ಟಾದ್ವೈತ'
                     ])
                     ->required()
-                    ->default('advaita'),
+                    ->default('advaita')->native(false),
                 Forms\Components\TextInput::make('sub_category')->label('ಉಪಪಂಗಡ')
                     ->required()
                     ->maxLength(255)
@@ -68,13 +82,14 @@ class FamilyDetailResource extends Resource
                         'sama' => 'ಸಾಮವೇದ'
                     ])
                     ->required()
-                    ->default('yajur'),
+                    ->default('yajur')->native(false),
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->deferLoading()
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -86,7 +101,8 @@ class FamilyDetailResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('name_of_head_of_family')
                     ->label('ಕುಟುಂಬ ಸದಸ್ಯರ ಹೆಸರು')
                     ->searchable(),
@@ -114,6 +130,7 @@ class FamilyDetailResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -139,6 +156,7 @@ class FamilyDetailResource extends Resource
         return [
             'index' => Pages\ListFamilyDetails::route('/'),
             'create' => Pages\CreateFamilyDetail::route('/create'),
+            'view' => Pages\ViewFamilyDetail::route('view/{record}'),
             'edit' => Pages\EditFamilyDetail::route('/{record}/edit'),
         ];
     }

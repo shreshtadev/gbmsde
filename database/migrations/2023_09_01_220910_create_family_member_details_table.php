@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('email_address')->nullable();
             $table->string('phone_number', 30)->index();
             $table->smallInteger('related_as')->default(1);
-            $table->unsignedSmallInteger('is_married')->default(0);
+            $table->boolean('is_married')->default(false);
             $table->integer('age')->max(145)->default(10);
             $table->string('education_occupation_details')->nullable();
             $table->foreignIdFor(FamilyDetail::class);

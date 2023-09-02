@@ -22,7 +22,7 @@ class FamilyMemberDetail extends Model
         'family_detail_id'
     ];
 
-    public function familDetail(): BelongsTo {
+    public function familyDetail(): BelongsTo {
         return $this->belongsTo(FamilyDetail::class);
     }
 }

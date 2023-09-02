@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\FamilyMemberDetailResource\Pages;
 use App\Filament\Resources\FamilyMemberDetailResource\RelationManagers;
+use App\Models\FamilyDetail;
 use App\Models\FamilyMemberDetail;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -41,11 +42,12 @@ class FamilyMemberDetailResource extends Resource
                     ->required()
                     ->numeric()
                     ->default(1),
-                Forms\Components\TextInput::make('is_married')
+                Forms\Components\Toggle::make('is_married')
                     ->label('ವಿವಾಹಿತ/ಅವಿವಾಹಿತ')
                     ->required()
-                    ->numeric()
-                    ->default(0),
+                    ->onColor('success')
+                    ->offColor('danger')
+                    ->default(false),
                 Forms\Components\TextInput::make('age')
                     ->label('ವಯಸ್ಸು')
                     ->required()
@@ -54,16 +56,18 @@ class FamilyMemberDetailResource extends Resource
                 Forms\Components\TextInput::make('education_occupation_details')
                     ->label('ವಿದ್ಯಾರ್ಥಿ/ಉದ್ಯೋಗ ವಿವರ')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('family_detail_id')
+                Forms\Components\Select::make('family_detail_id')
                     ->label('ಕುಟುಂಬ')
-                    ->required()
-                    ->numeric(),
+                    ->options(FamilyDetail::all()->pluck('name_of_head_of_family', 'id'))
+                    ->native(false)
+                    ->required(),
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+        ->deferLoading()
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -80,23 +84,25 @@ class FamilyMemberDetailResource extends Resource
                 Tables\Columns\TextColumn::make('member_name')
                     ->label('ಸದಸ್ಯರ ಹೆಸರು')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email_address')
+                Tables\Columns\TextColumn::make('email_address')->label('ಇಮೇಲ್')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('phone_number')
+                Tables\Columns\TextColumn::make('phone_number')->label('ದೂರವಾಣಿ ಸಂಖ್ಯೆ')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('related_as')
+                    ->label('ಸಂಬಂಧ')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('is_married')
+                Tables\Columns\ToggleColumn::make('is_married')->label('ವಿವಾಹಿತ/ಅವಿವಾಹಿತ')
+                    ->onColor('success')
+                    ->offColor('danger')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('age')->label('ವಯಸ್ಸು')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('age')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('education_occupation_details')
+                Tables\Columns\TextColumn::make('education_occupation_details')->label('ವಿದ್ಯಾರ್ಥಿ/ಉದ್ಯೋಗ ವಿವರ')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('family_detail_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('familyDetail.name_of_head_of_family')
+                    ->label('ಕುಟುಂಬ')
                     ->sortable(),
             ])
             ->filters([
