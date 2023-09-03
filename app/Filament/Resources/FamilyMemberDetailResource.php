@@ -6,6 +6,7 @@ use App\Filament\Resources\FamilyMemberDetailResource\Pages;
 use App\Filament\Resources\FamilyMemberDetailResource\RelationManagers;
 use App\Models\FamilyDetail;
 use App\Models\FamilyMemberDetail;
+use BezhanSalleh\FilamentShield\Traits\HasFilamentShield;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -16,9 +17,11 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class FamilyMemberDetailResource extends Resource
 {
+    use HasFilamentShield;
     protected static ?string $model = FamilyMemberDetail::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
 
     public static function form(Form $form): Form
     {
