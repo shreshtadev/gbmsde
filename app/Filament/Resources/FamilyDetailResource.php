@@ -119,7 +119,6 @@ class FamilyDetailResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -145,7 +144,6 @@ class FamilyDetailResource extends Resource
         return [
             'index' => Pages\ListFamilyDetails::route('/'),
             'create' => Pages\CreateFamilyDetail::route('/create'),
-            'view' => Pages\ViewFamilyDetail::route('view/{record}'),
             'edit' => Pages\EditFamilyDetail::route('/{record}/edit'),
         ];
     }

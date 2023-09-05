@@ -95,17 +95,15 @@ class FamilyMemberDetailResource extends Resource
                     ->label('ಸಂಬಂಧ')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\ToggleColumn::make('is_married')->label('ವಿವಾಹಿತ/ಅವಿವಾಹಿತ')
+                Tables\Columns\ToggleColumn::make('is_married')->label('ಅವಿವಾಹಿತ/ವಿವಾಹಿತ')
                     ->onColor('success')
                     ->offColor('danger')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('age')->label('ವಯಸ್ಸು')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('education_occupation_details')->label('ವಿದ್ಯಾರ್ಥಿ/ಉದ್ಯೋಗ ವಿವರ')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('familyDetail.name_of_head_of_family')
-                    ->label('ಕುಟುಂಬ')
+                    ->label('ಕುಟುಂಬದ ಮುಖ್ಯಸ್ಥ')
                     ->sortable(),
             ])
             ->filters([
