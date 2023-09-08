@@ -2,65 +2,21 @@
 
 namespace App\Livewire;
 
-use Filament\Forms;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
+use App\Livewire\Forms\FamilyDetailFilterForm;
 use Livewire\Component;
 use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Facades\Excel;
 
-class ExportFamilyDetail extends Component implements HasForms
+class ExportFamilyDetail extends Component
 {
-    use InteractsWithForms;
 
-    public ?array $data = [];
+    public FamilyDetailFilterForm $familyFilterDetailForm;
+    public array $vedas = ['rig', 'yajur', 'sama'];
+    public array $categories = ['advaita', 'dwaita', 'vishisthadwaita'];
 
-    public function mount(): void
+    public function exportCsv()
     {
-        $this->form->fill();
-    }
-
-    public function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Forms\Components\Select::make('veda')
-                    ->label('ವೇದ')
-                    ->options([
-                        'rig' => 'ಋಗ್ವೇದ',
-                        'yajur' => 'ಯಜುರ್ವೇದ',
-                        'sama' => 'ಸಾಮವೇದ'
-                    ])
-                    ->default('yajur')
-                    ->native(false),
-                Forms\Components\Select::make('category')
-                    ->label('ಪಂಗಡ')
-                    ->options([
-                        'advaita' => 'ಅದ್ವೈತ',
-                        'dwaita' => 'ದ್ವೈತ',
-                        'vishisthadwaita' => 'ವಿಶಿಷ್ಟಾದ್ವೈತ'
-                    ])
-                    ->default('advaita')
-                    ->native(false),
-                Forms\Components\TextInput::make('taluk')
-                    ->label('ತಾಲೂಕು')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('area')
-                    ->label('ಪ್ರದೇಶ')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('sub_category')
-                    ->label('ಉಪಪಂಗಡ')
-                    ->maxLength(255)
-                    ->default('smartha')
-            ])
-            ->statePath('data');
-    }
-
-    public function create(): void
-    {
-        $data = $this->form->getState();
-
-        var_dump($data);
+        return $this->familyFilterDetailForm->generateCsv();
     }
 
     public function render(): View

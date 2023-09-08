@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\RelatedAs;
 use App\Filament\Resources\FamilyMemberDetailResource\Pages;
 use App\Filament\Resources\FamilyMemberDetailResource\RelationManagers;
 use App\Models\FamilyDetail;
@@ -13,6 +14,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class FamilyMemberDetailResource extends Resource
@@ -92,8 +94,10 @@ class FamilyMemberDetailResource extends Resource
                 Tables\Columns\TextColumn::make('phone_number')->label('ದೂರವಾಣಿ ಸಂಖ್ಯೆ')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('related_as')
+                    ->getStateUsing(function(Model $record) {
+                        return RelatedAs::from($record->related_as)->getLabel();
+                    })
                     ->label('ಸಂಬಂಧ')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\ToggleColumn::make('is_married')->label('ಅವಿವಾಹಿತ/ವಿವಾಹಿತ')
                     ->onColor('success')
