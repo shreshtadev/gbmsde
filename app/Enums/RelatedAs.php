@@ -2,7 +2,9 @@
 
 namespace App\Enums;
 
+use Exception;
 use Filament\Support\Contracts\HasLabel;
+use Illuminate\Support\Arr;
 
 enum RelatedAs: int implements HasLabel
 {
@@ -33,5 +35,13 @@ enum RelatedAs: int implements HasLabel
             'Daughter_In_Law' => 'ಸೊಸೆ',
             'Son_In_Law' => 'ಅಳಿಯ'
         };
+    }
+
+    public static function findValueFromName(string $relatedAs) {
+        $relatedAs = str_replace(" ", "_", $relatedAs);
+        return get_object_vars(Arr::first(Arr::where(self::cases(), function ($rl) use ($relatedAs) {
+            $name = $rl->name;
+            return $name == $relatedAs;
+        })))['value'];
     }
 }
