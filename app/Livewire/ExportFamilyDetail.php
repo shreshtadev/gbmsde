@@ -5,7 +5,6 @@ namespace App\Livewire;
 use App\Livewire\Forms\FamilyDetailFilterForm;
 use Livewire\Component;
 use Illuminate\Contracts\View\View;
-use Maatwebsite\Excel\Facades\Excel;
 
 class ExportFamilyDetail extends Component
 {
