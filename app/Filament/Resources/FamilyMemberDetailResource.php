@@ -42,11 +42,12 @@ class FamilyMemberDetailResource extends Resource
                     ->tel()
                     ->required()
                     ->maxLength(30),
-                Forms\Components\TextInput::make('related_as')
+                Forms\Components\Select::make('related_as')
                     ->label('ಸಂಬಂಧ')
+                    ->options(collect(RelatedAs::cases())->pluck('name', 'value'))
+                    ->getOptionLabelUsing(fn ($value): ?string => RelatedAs::from($value)->getLabel())
                     ->required()
-                    ->numeric()
-                    ->default(1),
+                    ->default(1)->native(false),
                 Forms\Components\Toggle::make('is_married')
                     ->label('ವಿವಾಹಿತ/ಅವಿವಾಹಿತ')
                     ->required()
