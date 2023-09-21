@@ -12,6 +12,7 @@ class FamilyMemberDetail extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'id',
         'member_name',
         'email_address',
         'phone_number',

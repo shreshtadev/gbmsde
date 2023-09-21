@@ -3,25 +3,41 @@
 namespace App\Imports;
 
 use App\Enums\RelatedAs;
+use App\Models\DailyWorkLog;
 use App\Models\FamilyMemberDetail;
+use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class FamilyMemberDetailImport implements ToModel
+class FamilyMemberDetailImport implements ToModel, WithHeadingRow
 {
+
+    use Importable;
+
+    public function __construct(public ?DailyWorkLog $dailyWorkLog) {
+        Log::debug('Updating Status');
+        if($dailyWorkLog->data_import_status == 'NOT_STARTED') {
+            $dailyWorkLog->data_import_status = 'IN_PROGRESS';
+            $dailyWorkLog->save();
+        }
+        Log::debug('Status Updated');
+    }
     /**
      * @param array $row
      */
     public function model(array $row)
     {
-        FamilyMemberDetail::create([
-            'member_name' => $row[0],
-            'related_as' => RelatedAs::findValueFromName($row[1]),
-            'is_married' => $row[2] == 0,
-            'age' => $row[4],
-            'education_occupation_details' => $row[5],
-            'family_detail_id' => $row[6] ?? new \Exception('FamilyDetail selection is mandatory'),
-            'email_address' => $row[7] ?? '',
-            'phone_number' => $row[8],
+       return FamilyMemberDetail::create([
+            'member_name' => $row['member_name'] ?? 'NA',
+            'related_as' => $row['related_as'] != null ? RelatedAs::findValueFromName($row['related_as']) : 'NA',
+            'is_married' => $row['is_married'] == 'married' ? 1 : 0,
+            'age' => $row['age'] ?? 0,
+            'education_occupation_details' => $row['educationoccupation'] ?? 'NA',
+            'family_detail_id' => $row['family_sl_no'],
+            'email_address' => $row['email_address'] ?? 'NA',
+            'phone_number' => $row['phone_number'] ?? 'NA',
         ]);
     }
+
 }
