@@ -8,6 +8,7 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+
     /**
      * Seed the application's database.
      */
@@ -21,5 +22,6 @@ class DatabaseSeeder extends Seeder
         // ]);
         // FamilyDetail::factory(1000)->create();
         // FamilyMemberDetail::factory(1500)->create();
+        // DailyWorkLog::factory(10)->create();
     }
 }

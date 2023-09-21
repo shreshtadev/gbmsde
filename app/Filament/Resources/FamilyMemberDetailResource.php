@@ -64,7 +64,7 @@ class FamilyMemberDetailResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Select::make('family_detail_id')
                     ->label('ಕುಟುಂಬ')
-                    ->options(FamilyDetail::all()->pluck('name_of_head_of_family', 'id'))
+                    ->relationship('familyDetail', 'name_of_head_of_family')
                     ->native(false)
                     ->required(),
             ]);

@@ -9,7 +9,6 @@
             <option value = "yajur">ಯಜುರ್ವೇದ</option>
             <option value = "sama">ಸಾಮವೇದ</option>
           </select>
-
         </div>
         <div class="mb-4">
           <label for="apellido" class="block mb-2 text-sm text-gray-600">ಪಂಗಡ</label>
@@ -31,7 +30,7 @@
           <label for="confirmPassword" class="block mb-2 text-sm text-gray-600">ಪ್ರದೇಶ</label>
           <input wire:model="familyFilterDetailForm.area" type="text" id="area" name="area" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500">
         </div>
-        <button type="submit" class="w-32 bg-gradient-to-r from-cyan-400 to-cyan-600 text-white py-2 rounded-lg mx-auto block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 mb-2">Generate Report</button>
+        <button type="submit" class="w-64  mx-auto block mb-2 items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Generate Report</button>
       </form>
       <div class="text-center">
         <p class="text-sm">For more details <a href="#" class="text-cyan-600">Admin Hub</a></p>

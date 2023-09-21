@@ -4,6 +4,7 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 
+use App\Policies\DailyWorkLogPolicy;
 use App\Policies\FamilyDetailPolicy;
 use App\Policies\FamilyMemberDetailPolicy;
 use App\Policies\RolePolicy;
@@ -23,6 +24,7 @@ class AuthServiceProvider extends ServiceProvider
         FamilyDetailPolicy::class,
         FamilyMemberDetailPolicy::class,
         RolePolicy::class,
+        DailyWorkLogPolicy::class
     ];
 
     /**

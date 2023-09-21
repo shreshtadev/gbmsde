@@ -5,6 +5,7 @@ namespace App\Enums;
 use Exception;
 use Filament\Support\Contracts\HasLabel;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 
 enum RelatedAs: int implements HasLabel
 {
@@ -19,6 +20,9 @@ enum RelatedAs: int implements HasLabel
     case Son_In_Law = 7;
     case GrandFather = 8;
     case GrandMother = 9;
+    case Wife = 10;
+    case GrandSon = 11;
+    case GrandDaughter = 12;
 
 
     public function getLabel(): ?string
@@ -33,15 +37,19 @@ enum RelatedAs: int implements HasLabel
             'GrandFather' => 'ಅಜ್ಜ',
             'GrandMother' => 'ಅಜ್ಜಿ',
             'Daughter_In_Law' => 'ಸೊಸೆ',
-            'Son_In_Law' => 'ಅಳಿಯ'
+            'Son_In_Law' => 'ಅಳಿಯ',
+            'Wife' => 'ಹೆಂಡತಿ',
+            'GrandSon' => 'ಮೊಮ್ಮಗ',
+            'GrandDaughter' => 'ಮೊಮ್ಮಗಳು'
         };
     }
 
     public static function findValueFromName(string $relatedAs) {
         $relatedAs = str_replace(" ", "_", $relatedAs);
+        Log::debug('RelatedAs ' . $relatedAs);
         return get_object_vars(Arr::first(Arr::where(self::cases(), function ($rl) use ($relatedAs) {
             $name = $rl->name;
-            return $name == $relatedAs;
+            return strtolower($name) == strtolower($relatedAs);
         })))['value'];
     }
 }
