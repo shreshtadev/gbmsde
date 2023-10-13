@@ -21,8 +21,21 @@ enum RelatedAs: int implements HasLabel
     case GrandFather = 8;
     case GrandMother = 9;
     case Wife = 10;
+    case Spouse = 10;
     case GrandSon = 11;
     case GrandDaughter = 12;
+    case Chikkappa = 13;
+    case Chikkamma = 14;
+    case Sister = 15;
+    case Brother = 16;
+    case Friend = 17;
+    case Bhavana_Maga = 18;
+    case Sister_In_Law = 19;
+    case Brother_In_Law = 20;
+    case Brother_S_Wife = 21;
+    case Brother_S_Son = 22;
+    case Mother_In_Law
+    case NA = 100;
 
 
     public function getLabel(): ?string
@@ -39,17 +52,29 @@ enum RelatedAs: int implements HasLabel
             'Daughter_In_Law' => 'ಸೊಸೆ',
             'Son_In_Law' => 'ಅಳಿಯ',
             'Wife' => 'ಹೆಂಡತಿ',
+            'Spouse' => 'ಹೆಂಡತಿ',
             'GrandSon' => 'ಮೊಮ್ಮಗ',
-            'GrandDaughter' => 'ಮೊಮ್ಮಗಳು'
+            'GrandDaughter' => 'ಮೊಮ್ಮಗಳು',
+            'Chikkappa' => 'ಚಿಕ್ಕಪ್ಪ',
+            'Chikkamma' => 'ಚಿಕ್ಕಮ್ಮ',
+            'Sister' => 'ಸಹೋದರಿ',
+            'Brother' => 'ಸಹೋದರ',
+            'Friend' => 'ಸ್ನೇಹಿತ',
+            'Bhavana_Maga' => 'ಭಾವನ ಮಗ',
+            'Sister_In_Law' => 'ನಾದಿನಿ',
+            'Brother_In_Law' => 'ಸೋದರ ಮಾವ',
+            'Brother_S_Wife' => 'ಅಣ್ಣನ ಹೆಂಡತಿ',
+            'Brother_S_Son' => 'ಅಣ್ಣನ ಮಗ',
+            'NA' => 'ಲಭ್ಯವಿಲ್ಲ'
         };
     }
 
     public static function findValueFromName(string $relatedAs) {
-        $relatedAs = str_replace(" ", "_", $relatedAs);
-        Log::debug('RelatedAs ' . $relatedAs);
         return get_object_vars(Arr::first(Arr::where(self::cases(), function ($rl) use ($relatedAs) {
             $name = $rl->name;
-            return strtolower($name) == strtolower($relatedAs);
+            $fmtName = str_replace("_",'',$name);
+            $fmtRelatedAs = str_replace(" ", '', $relatedAs);
+            return strtolower($fmtName) == strtolower($fmtRelatedAs);
         })))['value'];
     }
 }

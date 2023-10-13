@@ -13,25 +13,28 @@ class FamilyDetailImport implements ToModel, WithHeadingRow
 {
     use Importable;
 
-    public function __construct(public ?DailyWorkLog $dailyWorkLog) {
-        Log::debug('Updating Status');
-        if($dailyWorkLog->data_import_status == 'NOT_STARTED') {
-            $dailyWorkLog->data_import_status = 'IN_PROGRESS';
-            $dailyWorkLog->save();
+    public function __construct(public ?DailyWorkLog $dailyWorkLog)
+    {
+        if ($dailyWorkLog != null) {
+            Log::debug('Updating Status');
+            if ($dailyWorkLog->data_import_status == 'NOT_STARTED') {
+                $dailyWorkLog->data_import_status = 'IN_PROGRESS';
+                $dailyWorkLog->save();
+            }
+            Log::debug('Status Updated');
         }
-        Log::debug('Status Updated');
     }
     /**
-    * @param array $row
-    * @return FamilyDetail|null
-    */
+     * @param array $row
+     * @return FamilyDetail|null
+     */
     public function model(array $row)
     {
         return FamilyDetail::create([
             'id' => $row['sl_no'],
-            'name_of_head_of_family' => $row['name_of_head_of_the_family'] ?? 'NA',
+            'name_of_head_of_family' => $row['name'] ?? 'NA',
             'address_line_1' => $row['address'] ?? 'NA',
-            'veda' => $row['veda'] ?? 'NA',
+            'veda' => ($row['veda'] == '-' || $row['veda'] == null || $row['veda'] == '') ? 'NA' : $row['veda'],
             'category' => $row['category'] ?? 'NA',
             'sub_category' => $row['sub_category'] ?? 'NA',
             'gotra' => $row['gothra'] ?? 'NA',
@@ -42,5 +45,4 @@ class FamilyDetailImport implements ToModel, WithHeadingRow
             'occupation' => $row['profession'] ?? 'NA'
         ]);
     }
-
 }

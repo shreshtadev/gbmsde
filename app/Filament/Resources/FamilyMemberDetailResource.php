@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use App\Enums\RelatedAs;
 use App\Filament\Resources\FamilyMemberDetailResource\Pages;
 use App\Filament\Resources\FamilyMemberDetailResource\RelationManagers;
 use App\Models\FamilyDetail;
@@ -42,12 +41,10 @@ class FamilyMemberDetailResource extends Resource
                     ->tel()
                     ->required()
                     ->maxLength(30),
-                Forms\Components\Select::make('related_as')
+                Forms\Components\TextInput::make('related_as')
                     ->label('ಸಂಬಂಧ')
-                    ->options(collect(RelatedAs::cases())->pluck('name', 'value'))
-                    ->getOptionLabelUsing(fn ($value): ?string => RelatedAs::from($value)->getLabel())
                     ->required()
-                    ->default(1)->native(false),
+                    ->default('Father'),
                 Forms\Components\Toggle::make('is_married')
                     ->label('ವಿವಾಹಿತ/ಅವಿವಾಹಿತ')
                     ->required()
@@ -95,9 +92,6 @@ class FamilyMemberDetailResource extends Resource
                 Tables\Columns\TextColumn::make('phone_number')->label('ದೂರವಾಣಿ ಸಂಖ್ಯೆ')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('related_as')
-                    ->getStateUsing(function(Model $record) {
-                        return RelatedAs::from($record->related_as)->getLabel();
-                    })
                     ->label('ಸಂಬಂಧ')
                     ->sortable(),
                 Tables\Columns\ToggleColumn::make('is_married')->label('ಅವಿವಾಹಿತ/ವಿವಾಹಿತ')

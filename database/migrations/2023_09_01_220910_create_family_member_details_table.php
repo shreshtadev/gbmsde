@@ -19,11 +19,11 @@ return new class extends Migration
             $table->string('member_name')->index();
             $table->string('email_address')->nullable();
             $table->string('phone_number', 30)->index();
-            $table->smallInteger('related_as')->default(1);
+            $table->string('related_as')->default('Father');
             $table->boolean('is_married')->default(false);
             $table->integer('age')->max(145)->default(10);
             $table->string('education_occupation_details')->nullable();
-            $table->foreignIdFor(FamilyDetail::class);
+            $table->foreignIdFor(FamilyDetail::class)->nullable();
 
         });
     }
