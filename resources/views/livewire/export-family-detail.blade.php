@@ -35,6 +35,5 @@
       <div class="text-center">
         <p class="text-sm">For more details <a href="#" class="text-cyan-600">Admin Hub</a></p>
       </div>
-      <p class="text-xs text-gray-600 text-center mt-8">&copy; {{date('Y')}} Shreshta SMG</p>
     </div>
   </div>
