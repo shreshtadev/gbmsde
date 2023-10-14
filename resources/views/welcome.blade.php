@@ -855,18 +855,13 @@
                             <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">ಶಿವಮೊಗ್ಗ ಜಿಲ್ಲಾ
                                 ಬ್ರಾಹ್ಮಣ ಮಹಾಸಭಾ</h2>
 
-                            <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                न हि ज्ञानेन सदृशं
-                            </p>
-                            <span
-                                class="fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-t border-gray-200 shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800 dark:border-gray-600">
-                                <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">©
-                                    @php
-                                        echo date('Y');
-                                    @endphp
-                                    <a href="#" class="hover:underline">Shreshta.smg™</a>. All Rights Reserved.
-                                </span>
-                            </span>
+                            <div class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                                <p>न हि ज्ञानेन सदृशं</p>
+                                <p class="mt-6 text-xs font-light">&copy; @php
+                                    echo date('Y');
+                                @endphp Shreshta.smg™. All Rights Reserved.</p>
+                            </div>
+
                         </div>
                     </a>
                 </div>
